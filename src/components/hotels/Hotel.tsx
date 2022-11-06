@@ -3,7 +3,7 @@ import { GrLocation } from "react-icons/gr";
 import { BsFillCheckCircleFill } from "react-icons/bs";
 import { IoIosArrowForward } from "react-icons/io";
 import { HotelType } from "./Hotel-List";
-import { Modal, Carousel, Button } from "antd";
+import { Modal, Carousel, Button, Spin } from "antd";
 import { useEffect, useState } from "react";
 import axios from "../baseUrl";
 import { useNavigate } from "react-router-dom";
@@ -21,11 +21,20 @@ export const onError = (message: string) => {
   });
 };
 
-export const Hotel = ({ hotel }: { hotel: HotelType }) => {
+export const Hotel = ({
+  hotel,
+  hotels,
+  setHotels,
+}: {
+  hotel: HotelType;
+  hotels: HotelType[];
+  setHotels: any;
+}) => {
   const [open, setOpen] = useState(false);
   const [confirmLoading, setConfirmLoading] = useState(false);
   const [viewHotel, setViewHotel] = useState<HotelType>();
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(false);
   const navigate = useNavigate();
   const generateStar = (amount: number) => {
     const stars = [];
@@ -53,11 +62,13 @@ export const Hotel = ({ hotel }: { hotel: HotelType }) => {
   const showModal = async () => {
     setOpen(true);
     try {
+      setLoading(true);
       const {
         data: { data },
       } = await axios.get(`/hotel/${hotel.id}`);
       console.log(data);
       setViewHotel(data);
+      setLoading(false);
     } catch (error) {
       console.log(error);
     }
@@ -91,8 +102,8 @@ export const Hotel = ({ hotel }: { hotel: HotelType }) => {
       } = await axios.delete(`/hotel/${id}`);
       console.log(data);
       setOpen(false);
-      navigate("/brand");
-      navigate("/");
+      const newHotels = hotels.filter((hotel: HotelType) => id !== hotel.id);
+      setHotels(newHotels);
       onSuccess("Hotel has been deleted successfully");
     } catch (error) {
       console.log(error);
@@ -157,27 +168,31 @@ export const Hotel = ({ hotel }: { hotel: HotelType }) => {
         onCancel={handleCancel}
         width={1000}
       >
-        {viewHotel && (
+        {loading ? (
+          <div style={{ width: "100%", textAlign: "center" }}>
+            <Spin />
+          </div>
+        ) : (
           <>
             <div className="hotel">
               <div className="featured-image">
-                <img src={hotel.images[0].image} alt="hotel" />
+                <img src={viewHotel?.images[0].image} alt="hotel" />
               </div>
               <div className="content">
                 <div className="main">
-                  <h2>{hotel.name}</h2>
+                  <h2>{viewHotel?.name}</h2>
                   <div className="star">
-                    {getRatingStar(hotel.ratings)}
-                    <p>{hotel.brand.name}</p>
+                    {getRatingStar(viewHotel?.ratings!)}
+                    <p>{viewHotel?.brand.name}</p>
                   </div>
                   <div className="location">
                     <GrLocation style={{ fontSize: "24px" }} />
-                    <p>{hotel.city}</p>
+                    <p>{viewHotel?.city}</p>
                   </div>
                   <div className="reviews">
-                    <button>{hotel.ratings}</button>
+                    <button>{viewHotel?.ratings}</button>
                     <h5>Good reviews</h5>
-                    <p>&#32;&#40;{hotel.number_of_ratings}&#41;</p>
+                    <p>&#32;&#40;{viewHotel?.number_of_ratings}&#41;</p>
                   </div>
                 </div>
                 <div className="view">
@@ -187,19 +202,19 @@ export const Hotel = ({ hotel }: { hotel: HotelType }) => {
                       <BsFillCheckCircleFill /> Free cancellation
                     </h4>
                     <div className="view-deal">
-                      <h2>${hotel.price}</h2>
+                      <h2>${viewHotel?.price}</h2>
                     </div>
                   </div>
                   <div className="prices">
                     <h4>Our lowest price:</h4>
-                    <h3>${hotel.price}</h3>
+                    <h3>${viewHotel?.price}</h3>
                   </div>
                 </div>
               </div>
             </div>
             <div className="otherImages">
               <Carousel autoplay>
-                {viewHotel.images.map((image: any) => {
+                {viewHotel?.images.map((image: any) => {
                   return (
                     <div key={image.id}>
                       <img src={image.image} alt="viewHotel" />
@@ -213,14 +228,14 @@ export const Hotel = ({ hotel }: { hotel: HotelType }) => {
               type="primary"
               danger
               loading={isLoading}
-              onClick={() => handleDeleteHotel(viewHotel.id)}
+              onClick={() => handleDeleteHotel(viewHotel?.id!)}
             >
               Delete Hotel
             </Button>
             <Button
               style={{ margin: "1rem 0 0 1rem" }}
               type="primary"
-              onClick={() => handleUpdateHotel(viewHotel.id)}
+              onClick={() => handleUpdateHotel(viewHotel?.id!)}
             >
               Update Hotel
             </Button>

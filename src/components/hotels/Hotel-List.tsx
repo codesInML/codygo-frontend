@@ -202,7 +202,14 @@ const Hotels = () => {
           <Spin size="large" />
         </div>
       ) : (
-        hotels.map((hotel: HotelType) => <Hotel key={hotel.id} hotel={hotel} />)
+        hotels.map((hotel: HotelType) => (
+          <Hotel
+            hotels={hotels}
+            setHotels={setHotels}
+            key={hotel.id}
+            hotel={hotel}
+          />
+        ))
       )}
 
       <div className="paginate">
