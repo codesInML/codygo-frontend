@@ -8,7 +8,7 @@ const Header = () => {
           CODYGO
         </a>
         <div className="nav">
-          <a href="/">Hotels</a>
+          <a href="/hotel">Hotels</a>
           <a href="/brands">Brands</a>
           <a href="#">Pricing</a>
         </div>

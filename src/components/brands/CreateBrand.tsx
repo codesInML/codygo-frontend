@@ -1,8 +1,8 @@
 import { Button, Modal, Input } from "antd";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "../baseUrl";
 
-export const CreateBrand: React.FC = () => {
+export const CreateBrand = (props: any) => {
   const [open, setOpen] = useState(false);
   const [brandName, setBrandName] = useState("");
   const [confirmLoading, setConfirmLoading] = useState(false);
@@ -14,13 +14,16 @@ export const CreateBrand: React.FC = () => {
   const handleOk = async () => {
     setConfirmLoading(true);
     try {
-      await axios.post("/brand", { name: brandName });
-      alert("success");
+      const {
+        data: { data },
+      } = await axios.post("/brand", { name: brandName });
+      props.setBrandUpdate([data]);
     } catch (error) {
       console.log(error);
     }
     setConfirmLoading(false);
     setOpen(false);
+    setBrandName("");
   };
 
   const handleCancel = () => {
@@ -43,7 +46,11 @@ export const CreateBrand: React.FC = () => {
         confirmLoading={confirmLoading}
         onCancel={handleCancel}
       >
-        <Input placeholder="Brand name" onChange={handleChange} />
+        <Input
+          placeholder="Brand name"
+          value={brandName}
+          onChange={handleChange}
+        />
       </Modal>
     </>
   );

@@ -4,7 +4,7 @@ header {
 }
 
 .header__container {
-  max-height: 80px;
+  min-height: 80px;
   position: relative;
   display: flex;
   align-items: center;
@@ -57,5 +57,9 @@ p {
 
 @media screen and (max-width: 1024px) {
 }
-@media screen and (max-width: 600px) {
+@media screen and (max-width: 400px) {
+  .header__container {
+    display: block;
+    text-align: center;
+  }
 }

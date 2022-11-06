@@ -5,7 +5,7 @@
 
 .hotel {
   width: 100%;
-  height: 250px;
+  min-height: 250px;
   background-color: var(--color-light);
   display: flex;
   justify-content: space-between;
@@ -17,7 +17,7 @@
 
 .featured-image {
   width: 28%;
-  height: 100%;
+  min-height: 250px;
 }
 
 .featured-image img {
@@ -26,12 +26,19 @@
   border-radius: 5px;
 }
 
-.main {
-  width: 40%;
+.featured-image:hover {
+  cursor: pointer;
+}
+.hotel .content {
+  width: 70%;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
 }
 
-.view {
-  width: 30%;
+.content .main,
+.content .view {
+  width: 49%;
 }
 
 .main .star {
@@ -90,12 +97,14 @@
 .view .cancellation {
   background-color: rgba(241, 248, 234, 0.9);
   padding: 1rem;
-  border-radius: 10px;
+  border-radius: 5px;
 }
 
 .view .cancellation:hover {
   border: 1px solid rgb(2, 128, 0);
+  padding: calc(1rem - 1px);
   cursor: pointer;
+  margin: 0;
 }
 
 .view .cancellation h4 {
@@ -118,7 +127,8 @@
   background-color: rgb(2, 128, 0);
   border: none;
   color: #fff;
-  padding: 0.5rem 2rem;
+  width: 7rem;
+  height: 3rem;
   border-radius: 5px;
 }
 
@@ -128,20 +138,18 @@
 }
 
 .prices {
-  padding: 1rem 0;
-  display: flex;
-  justify-content: space-between;
+  padding: 1rem;
+  margin-top: 0.5rem;
+  border-radius: 5px;
 }
 
 .prices .price,
 .prices .lowest-price {
-  border-radius: 5px;
   padding: 0.5rem;
   border: 1px solid rgb(232, 232, 232);
 }
 
-.prices .price:hover,
-.prices .lowest-price:hover {
+.prices:hover {
   cursor: pointer;
   background-color: rgb(232, 232, 232);
 }
@@ -156,4 +164,90 @@
 
 .prices h3 {
   font-weight: 700;
+}
+
+.sort {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.sort p {
+  margin-right: 1rem;
+  font-size: 1rem;
+  font-weight: bold;
+}
+
+.spinner {
+  position: fixed;
+  width: 100vw;
+  height: 100%;
+  top: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal {
+  width: 100%;
+  height: 500px;
+}
+
+.otherImages {
+  width: 300px;
+  height: 300px;
+  margin-top: 1rem;
+}
+
+.otherImages img {
+  width: 300px;
+  height: 300px;
+  object-fit: cover;
+}
+
+.delete-hotel {
+  background-color: rgb(224, 16, 16);
+  border: none;
+  color: #fff;
+  width: 7rem;
+  height: 3rem;
+  border-radius: 5px;
+  margin-top: 1rem;
+}
+
+.delete-hotel:hover {
+  cursor: pointer;
+}
+
+/* MEDIA QUERIES (FOR MEDIUM DEVICES) */
+@media screen and (max-width: 1024px) {
+  .hotel .content {
+    display: block;
+  }
+
+  .content .main,
+  .content .view {
+    width: 100%;
+  }
+
+  .content .main {
+    margin-bottom: 1rem;
+  }
+
+  .content .main h2 {
+    font-size: 1.2rem;
+  }
+}
+
+/* MEDIA QUERIES (FOR SMALL DEVICES) */
+@media screen and (max-width: 600px) {
+  .featured-image {
+    display: none;
+  }
+  .hotel .content {
+    width: 100%;
+  }
 }

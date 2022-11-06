@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap");
 
 * {
   margin: 0;
@@ -21,7 +21,7 @@
 
   --container-width-lg: 75%;
   --container-width-md: 86%;
-  --container-width-sm: 90%
+  --container-width-sm: 90%;
 }
 
 html {
@@ -33,7 +33,7 @@ html {
 }
 
 body {
-  font-family: 'Poppins', sans-serif;
+  font-family: "Poppins", sans-serif;
   background: var(--color-bg);
   color: var(--color-text);
   line-height: 1.7;
@@ -43,11 +43,16 @@ body {
 .container {
   width: var(--container-width-lg);
   margin: 0 auto;
+  padding-top: 1rem;
 }
 
-h1, h2, h3, h4, h5 {
+h1,
+h2,
+h3,
+h4,
+h5 {
   font-weight: 500;
-  margin: 0 !important;;
+  margin: 0 !important;
 }
 
 h1 {
@@ -55,27 +60,27 @@ h1 {
 }
 
 section {
-  margin-top: 8rem;
-  height: 100vh;
+  min-height: 100vh;
 }
 
-section > h2, section > h5 {
+section > h1,
+section > h5 {
   text-align: center;
-  color: var(--color-light)
+  color: var(--color-light);
 }
 
-section > h2 {
+section > h1 {
   color: var(--color-primary);
   margin-bottom: 3rem;
 }
 
 .text-light {
-  color: var(--color-light)
+  color: var(--color-light);
 }
 
 a {
   color: var(--color-primary);
-  transition: var(--transition)
+  transition: var(--transition);
 }
 
 a:hover {
@@ -113,7 +118,7 @@ a:hover {
 /* MEDIA QUERIES (FOR MEDIUM DEVICES) */
 @media screen and (max-width: 1024px) {
   .container {
-    width: var(--container-width-md)
+    width: var(--container-width-md);
   }
 
   section {
@@ -124,7 +129,7 @@ a:hover {
 /* MEDIA QUERIES (FOR SMALL DEVICES) */
 @media screen and (max-width: 600px) {
   .container {
-    width: var(--container-width-sm)
+    width: var(--container-width-sm);
   }
 
   section > h2 {
