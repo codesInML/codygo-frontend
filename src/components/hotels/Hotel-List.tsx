@@ -1,7 +1,7 @@
 import type { PaginationProps } from "antd";
-import { Pagination, Select } from "antd";
+import { Pagination, Select, Spin } from "antd";
 import { useEffect, useState } from "react";
-import { Hotel } from "./Hotel";
+import { Hotel, onError } from "./Hotel";
 import "./hotel.css";
 import axios from "../baseUrl";
 
@@ -33,6 +33,7 @@ interface OptionType {
 
 const Hotels = () => {
   const [options, setOptions] = useState<OptionType[]>([]);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
   const [current, setCurrent] = useState(1);
   const [orderBy, setOrderBy] = useState("");
   const [hotels, setHotels] = useState<HotelType[]>([]);
@@ -126,7 +127,7 @@ const Hotels = () => {
     } catch (error) {}
   };
 
-  useEffect(() => {}, [hotels]);
+  useEffect(() => {}, [hotels, isLoading]);
 
   useEffect(() => {
     (async () => {
@@ -143,15 +144,17 @@ const Hotels = () => {
           })
         );
 
+        setIsLoading(true);
         const {
           data: { data },
         } = await axios.get(`/hotel?limit=${pageSize}&page=${current}`);
         setHotels(data.hotels);
-        console.log(data);
         setTotal(data.total);
       } catch (error) {
         console.log(error);
+        onError("Could not get hotels, please check you network connection");
       }
+      setIsLoading(false);
     })();
   }, []);
 
@@ -194,9 +197,13 @@ const Hotels = () => {
           options={options}
         />
       </div>
-      {hotels.map((hotel: HotelType) => (
-        <Hotel key={hotel.id} hotel={hotel} />
-      ))}
+      {isLoading ? (
+        <div style={{ textAlign: "center", marginTop: "1rem" }}>
+          <Spin size="large" />
+        </div>
+      ) : (
+        hotels.map((hotel: HotelType) => <Hotel key={hotel.id} hotel={hotel} />)
+      )}
 
       <div className="paginate">
         <Pagination

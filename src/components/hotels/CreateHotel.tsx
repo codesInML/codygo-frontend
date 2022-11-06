@@ -66,12 +66,7 @@ export const CreateHotel = () => {
   return (
     <section className="container create-hotel">
       <h1>Create Hotel</h1>
-      <Form
-        labelCol={{ span: 4 }}
-        wrapperCol={{ span: 14 }}
-        layout="horizontal"
-        onFinish={handleCreateHotel}
-      >
+      <Form layout="vertical" onFinish={handleCreateHotel}>
         <Form.Item label="Name" name={"name"}>
           <Input />
         </Form.Item>

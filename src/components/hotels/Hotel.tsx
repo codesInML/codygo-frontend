@@ -79,6 +79,10 @@ export const Hotel = ({ hotel }: { hotel: HotelType }) => {
 
   useEffect(() => {}, [viewHotel, open, isLoading]);
 
+  const handleUpdateHotel = (id: string) => {
+    navigate(`/hotel/${id}`);
+  };
+
   const handleDeleteHotel = async (id: string) => {
     setIsLoading(true);
     try {
@@ -205,12 +209,20 @@ export const Hotel = ({ hotel }: { hotel: HotelType }) => {
               </Carousel>
             </div>
             <Button
+              style={{ marginTop: "1rem" }}
               type="primary"
               danger
               loading={isLoading}
               onClick={() => handleDeleteHotel(viewHotel.id)}
             >
               Delete Hotel
+            </Button>
+            <Button
+              style={{ margin: "1rem 0 0 1rem" }}
+              type="primary"
+              onClick={() => handleUpdateHotel(viewHotel.id)}
+            >
+              Update Hotel
             </Button>
           </>
         )}
